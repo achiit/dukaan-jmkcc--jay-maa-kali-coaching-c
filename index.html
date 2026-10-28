@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#db2777">
+<title>JMKCC Study — Free Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#db2777;--primary-light:#ec4899;--primary-bg:#fdf2f8;
+  --bg:#f8fafc;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;
+  --success:#10b981;--danger:#ef4444;--warning:#f59e0b;--blue:#3b82f6;
+  --shadow-sm:0 2px 4px rgba(219,39,119,.05),0 1px 2px rgba(15,23,42,.04);
+  --shadow:0 6px 16px rgba(219,39,119,.08);
+  --shadow-lg:0 12px 30px rgba(219,39,119,.15);
+  --shadow-primary:0 8px 24px rgba(219,39,119,.3);
+  --hindi:'Noto Sans Devanagari','Poppins',sans-serif;
+}
+html,body{height:100%;}
+body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;overflow-x:hidden;display:flex;justify-content:center;}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit;}
+input,select{font-family:inherit;font-size:14px;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+ul{list-style:none;}
+.hidden{display:none!important;}
+.hindi{font-family:var(--hindi);}
+
+/* ========== BLOCKED SCREEN ========== */
+#blockedScreen{position:fixed;inset:0;z-index:9999;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;}
+#blockedScreen .lock-icon{width:100px;height:100px;background:#ef4444;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:46px;margin-bottom:20px;box-shadow:0 10px 30px rgba(239,68,68,.4);}
+#blockedScreen h1{font-size:24px;font-weight:800;margin-bottom:10px;color:#ef4444;}
+#blockedScreen p{font-size:15px;color:#94a3b8;line-height:1.6;max-width:300px;}
+#blockedScreen .contact-btn{margin-top:24px;background:#fff;color:#111;padding:12px 24px;border-radius:12px;font-weight:700;text-decoration:none;}
+
+/* ========== AUTH SCREEN ========== */
+.auth-screen{width:100%;max-width:520px;min-height:100vh;position:relative;background:linear-gradient(160deg,#fce7f3 0%,#fdf2f8 50%,#ffffff 100%);padding:36px 18px 26px;display:flex;flex-direction:column;overflow:hidden;}
+.auth-shape{position:absolute;border-radius:50%;background:rgba(219,39,119,.1);pointer-events:none;animation:float 7s ease-in-out infinite;}
+.auth-shape.s1{width:200px;height:200px;top:-70px;right:-60px;}
+.auth-shape.s2{width:150px;height:150px;bottom:-40px;left:-45px;animation-delay:2s;background:rgba(219,39,119,.08);}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+.auth-hero{text-align:center;color:var(--text);position:relative;z-index:2;margin-bottom:22px;flex-shrink:0;animation:slideUp .5s ease both;}
+.auth-logo{width:110px;height:110px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(219,39,119,.2);margin-bottom:12px;position:relative;animation:logoBounce .65s cubic-bezier(.2,.9,.3,1.4) .1s both;overflow:hidden;padding:2px;border:3px solid var(--primary);}
+.auth-logo svg{width:100%;height:100%;border-radius:50%;}
+@keyframes logoBounce{0%{transform:scale(0) rotate(-15deg);}70%{transform:scale(1.08) rotate(4deg);}100%{transform:scale(1) rotate(0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.auth-hero h1{font-size:26px;font-weight:800;letter-spacing:-.4px;margin-bottom:3px;color:var(--primary);}
+.auth-hero p{font-size:13px;color:var(--text-muted);font-weight:600;}
+.auth-card{background:#fff;border-radius:22px;padding:22px 20px 20px;position:relative;z-index:2;box-shadow:0 20px 40px rgba(219,39,119,.12);max-width:410px;width:100%;margin:0 auto;animation:slideUp .55s ease .12s both;flex-shrink:0;border:1px solid #fce7f3;}
+.verify-head{text-align:center;margin-bottom:18px;}
+.verify-head h2{font-size:19px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-.3px;}
+.verify-head p{font-size:12.5px;color:var(--text-muted);font-weight:500;}
+.auth-form{display:flex;flex-direction:column;gap:12px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group label{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.2px;}
+.input-wrap{position:relative;display:flex;align-items:center;}
+.input-wrap > i.lead{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:14px;pointer-events:none;transition:.15s;}
+.auth-form input{width:100%;height:48px;padding:0 14px 0 42px;border:1.5px solid var(--border);border-radius:12px;background:#f8fafc;color:var(--text);outline:none;font-size:14.5px;font-weight:500;transition:.15s;}
+.auth-form input::placeholder{color:#94a3b8;font-weight:400;}
+.auth-form input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 4px rgba(219,39,119,.15);}
+.pass-wrap{position:relative;}
+.pass-wrap input{padding-right:46px;}
+.pass-toggle{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:9px;color:var(--text-muted);font-size:14px;display:flex;align-items:center;justify-content:center;transition:.15s;}
+.pass-toggle:hover{background:var(--primary-bg);color:var(--primary);}
+.form-error{color:var(--danger);font-size:12.5px;font-weight:600;min-height:0;padding:0 2px;text-align:center;transition:.2s;}
+.form-error:not(:empty){min-height:16px;padding:2px;}
+.forgot-link{display:block;text-align:center;margin-top:14px;color:var(--primary);font-weight:700;font-size:13.5px;cursor:pointer;}
+
+/* ========== 3D BUTTONS ========== */
+.btn-primary{width:100%;height:52px;border-radius:14px;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-weight:700;font-size:15px;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 0 #831843, 0 8px 15px rgba(219,39,119,.3);transition:all .1s;position:relative;margin-top:6px;}
+.btn-primary:active{transform:translateY(4px);box-shadow:0 2px 0 #831843, 0 4px 8px rgba(219,39,119,.3);}
+.btn-primary span,.btn-primary i{position:relative;z-index:2;}
+.btn-primary:disabled{opacity:.7;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* ========== VERIFYING OVERLAY ========== */
+.verifying-overlay{position:fixed;inset:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.verifying-overlay.show{opacity:1;pointer-events:auto;}
+.verifying-box{text-align:center;color:var(--text);padding:0 24px;}
+.verifying-spinner{width:72px;height:72px;border-radius:50%;margin:0 auto 20px;border:5px solid #fce7f3;border-top-color:var(--primary);animation:spin 0.9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.verifying-check{width:84px;height:84px;border-radius:50%;margin:0 auto 20px;background:var(--primary);color:#fff;font-size:42px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 32px rgba(219,39,119,.4);animation:checkPop .45s cubic-bezier(.2,.9,.3,1.5);}
+@keyframes checkPop{0%{transform:scale(0);}60%{transform:scale(1.15);}100%{transform:scale(1);}}
+.verifying-text{font-size:18px;font-weight:800;margin-bottom:5px;letter-spacing:-.2px;}
+
+/* ========== APP SHELL ========== */
+.app-screen{width:100%;max-width:520px;min-height:100vh;height:100vh;background:var(--bg);display:flex;flex-direction:column;position:relative;box-shadow:var(--shadow-lg);overflow:hidden;}
+.topbar{background:linear-gradient(135deg,#db2777,#ec4899);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 4px 14px rgba(219,39,119,.3);position:relative;z-index:20;}
+.icon-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;position:relative;transition:.15s;flex-shrink:0;}
+.icon-btn:active{transform:scale(.92);}
+.brand{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
+.brand-logo{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:2px;border:2px solid #fbbf24;}
+.brand-logo svg{width:100%;height:100%;}
+.brand-text{font-size:16px;font-weight:800;letter-spacing:.2px;line-height:1;}
+.brand-text span{color:#fbbf24;font-weight:800;}
+.class-badge{height:34px;border-radius:9px;background:rgba(255,255,255,.2);color:#fff;font-size:12.5px;font-weight:700;padding:0 12px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;}
+
+/* ========== DRAWER ========== */
+.drawer-overlay{position:absolute;inset:0;background:rgba(15,23,42,.5);z-index:40;opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(2px);}
+.drawer-overlay.show{opacity:1;pointer-events:auto;}
+.drawer{position:absolute;top:0;left:0;bottom:0;width:280px;max-width:82vw;background:#fff;z-index:50;transform:translateX(-102%);transition:transform .3s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;box-shadow:8px 0 30px rgba(15,23,42,.2);}
+.drawer.show{transform:translateX(0);}
+.drawer-head{background:linear-gradient(135deg,#db2777,#ec4899);color:#fff;padding:24px 18px 20px;display:flex;align-items:center;gap:12px;}
+.drawer-avatar{width:52px;height:52px;border-radius:50%;background:#fff;color:var(--primary);font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;border:2px solid #fbbf24;flex-shrink:0;}
+.drawer-name{font-size:16px;font-weight:700;line-height:1.2;}
+.drawer-class{font-size:12px;opacity:.9;margin-top:3px;}
+.drawer-nav{flex:1;overflow-y:auto;padding:10px 8px;}
+.drawer-nav a{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;font-size:14px;font-weight:500;color:var(--text);transition:.15s;margin-bottom:2px;}
+.drawer-nav a i{width:20px;text-align:center;color:var(--text-muted);font-size:15px;}
+.drawer-nav a:active{background:var(--primary-bg);color:var(--primary);}
+.drawer-nav a.active{background:var(--primary-bg);color:var(--primary);font-weight:700;}
+.drawer-nav a.active i{color:var(--primary);}
+
+/* ========== MAIN CONTENT ========== */
+.main-content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:8px;position:relative;}
+.page{display:none;padding:14px 14px 20px;animation:fadeIn .25s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.welcome{margin-bottom:14px;}
+.welcome-hello{font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.welcome-hello span{color:var(--primary);}
+.welcome-sub{font-size:13px;color:var(--text-muted);font-weight:500;}
+
+/* ========== BANNER ========== */
+.main-banner{background:linear-gradient(135deg,#db2777 0%,#ec4899 100%);border-radius:18px;padding:18px 16px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 24px rgba(219,39,119,.25);margin-bottom:18px;color:#fff;position:relative;overflow:hidden;border:2px solid #fce7f3;}
+.main-banner::before{content:"";position:absolute;top:-50px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.15);}
+.main-banner::after{content:"";position:absolute;bottom:-40px;left:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1);}
+.mb-logo{width:64px;height:64px;background:#fff;border-radius:50%;padding:3px;border:2px solid #fbbf24;flex-shrink:0;position:relative;z-index:2;box-shadow:0 4px 10px rgba(0,0,0,.15);}
+.mb-logo svg{width:100%;height:100%;}
+.mb-text{position:relative;z-index:2;flex:1;}
+.mb-title{font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:2px;color:#fbbf24;text-shadow:0 2px 4px rgba(0,0,0,.2);}
+.mb-fullform{font-size:11px;font-weight:600;letter-spacing:.3px;opacity:.95;line-height:1.3;}
+.mb-tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 8px;border-radius:6px;font-size:9.5px;font-weight:700;margin-top:6px;text-transform:uppercase;letter-spacing:.5px;border:1px solid rgba(255,255,255,.3);}
+
+/* ========== GRID ========== */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 2px;}
+.section-title{font-size:15px;font-weight:700;color:var(--text);}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+.grid-item{background:#fff;border-radius:16px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.04);border:1.5px solid #e2e8f0;transition:.15s;text-align:center;position:relative;}
+.grid-item:active{transform:scale(.95);border-color:var(--primary-light);}
+.grid-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;box-shadow:0 4px 8px rgba(0,0,0,.15), inset 0 2px 0 rgba(255,255,255,.3);}
+.grid-label{font-size:11.5px;font-weight:700;color:var(--text);line-height:1.25;}
+
+/* ========== PAGE HEADER ========== */
+.page-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.page-back{width:38px;height:38px;border-radius:12px;background:#fff;color:var(--primary);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.05);border:1.5px solid #fce7f3;flex-shrink:0;}
+.page-back:active{background:var(--primary-bg);}
+.page-title{font-size:17px;font-weight:700;color:var(--text);flex:1;min-width:0;}
+.page-title small{display:block;font-size:12px;font-weight:500;color:var(--text-muted);margin-top:1px;}
+
+/* ========== LIST ITEMS ========== */
+.list-card{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 10px rgba(0,0,0,.04);border:1.5px solid #e2e8f0;transition:.15s;cursor:pointer;}
+.list-card:active{transform:scale(.98);border-color:var(--primary-light);}
+.lc-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0;box-shadow: inset 0 2px 0 rgba(255,255,255,.3);}
+.lc-body{flex:1;}
+.lc-title{font-size:14.5px;font-weight:700;color:var(--text);}
+.lc-sub{font-size:12px;color:var(--text-muted);margin-top:2px;font-weight:500;}
+.btn-action{padding:8px 14px;border-radius:10px;background:var(--primary-bg);color:var(--primary);font-weight:700;font-size:12px;transition:.15s;border:1px solid #fbcfe8;}
+.btn-action:active{background:var(--primary);color:#fff;}
+
+/* ========== SOCIAL LINKS ========== */
+.social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.social-card{background:#fff;border-radius:16px;padding:20px 10px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 4px 10px rgba(0,0,0,.04);border:1.5px solid #e2e8f0;transition:.15s;cursor:pointer;}
+.social-card:active{transform:scale(.95);}
+.sc-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;box-shadow:0 6px 16px rgba(0,0,0,.15);}
+.sc-label{font-size:13.5px;font-weight:700;color:var(--text);}
+
+/* ========== FREE TEST ========== */
+.test-card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 20px rgba(219,39,119,.08);border:1.5px solid #fce7f3;margin-bottom:16px;}
+.test-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:2px dashed #fce7f3;}
+.test-q-count{font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-bg);padding:5px 12px;border-radius:8px;display:flex;align-items:center;gap:5px;}
+.q-text{font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.4;}
+.options{display:flex;flex-direction:column;gap:10px;}
+.option-btn{padding:14px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;font-size:14px;font-weight:600;color:var(--text);text-align:left;transition:.15s;}
+.option-btn:active{background:#f8fafc;}
+/* NAYA BLUE SELECT LOGIC */
+.option-btn.selected{border-color:var(--blue);background:#eff6ff;color:#1d4ed8;transform:scale(1.02);box-shadow:0 4px 12px rgba(59,130,246,.15);}
+.test-footer{margin-top:20px;display:flex;justify-content:flex-end;}
+.btn-next{padding:12px 28px;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;font-size:14px;transition:.15s;box-shadow:0 4px 0 #831843;}
+.btn-next:active{transform:translateY(3px);box-shadow:0 1px 0 #831843;}
+.btn-next:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;transform:none;background:#94a3b8;}
+
+/* ========== PROFILE ========== */
+.profile-hero{background:linear-gradient(135deg,#db2777,#ec4899);border-radius:24px;padding:26px;color:#fff;text-align:center;margin-bottom:16px;box-shadow:0 10px 25px rgba(219,39,119,.25);}
+.profile-avatar{width:86px;height:86px;border-radius:50%;background:#fff;color:var(--primary);font-weight:800;font-size:32px;display:inline-flex;align-items:center;justify-content:center;border:4px solid #fbcfe8;margin-bottom:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);}
+.profile-name{font-size:22px;font-weight:800;margin-bottom:2px;}
+.profile-sub{font-size:13px;opacity:.95;font-weight:500;}
+.info-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.04);border:1.5px solid #e2e8f0;margin-bottom:16px;}
+.info-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid #f1f5f9;}
+.info-row:last-child{border-bottom:0;}
+.info-row i{width:38px;height:38px;border-radius:12px;background:var(--primary-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.info-label{flex:1;font-size:13.5px;font-weight:600;color:var(--text-muted);}
+.info-value{font-size:14px;font-weight:700;color:var(--text);}
+.btn-share{width:100%;height:52px;border-radius:16px;background:var(--primary-bg);color:var(--primary);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;border:2px solid #fbcfe8;margin-bottom:12px;}
+.btn-share:active{background:#fce7f3;}
+.btn-logout{width:100%;height:52px;border-radius:16px;background:#fef2f2;color:var(--danger);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;border:2px solid #fecaca;}
+.btn-logout:active{background:#fee2e2;}
+
+/* ========== BOTTOM NAV ========== */
+.bottom-nav{flex-shrink:0;background:#fff;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 8px calc(10px + env(safe-area-inset-bottom));border-top:2px solid #f1f5f9;box-shadow:0 -10px 20px rgba(0,0,0,.03);position:relative;z-index:15;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;color:#94a3b8;font-size:11px;font-weight:700;border-radius:14px;transition:all .2s;cursor:pointer;text-align:center;position:relative;}
+.nav-item i{font-size:20px;transition:transform .2s;}
+.nav-item.active{color:var(--primary);}
+.nav-item.active::before{content:"";position:absolute;top:0;width:40px;height:4px;background:var(--primary);border-radius:0 0 4px 4px;box-shadow:0 2px 8px rgba(219,39,119,.5);}
+.nav-item.active i{transform:translateY(-4px) scale(1.15);text-shadow:0 4px 8px rgba(219,39,119,.4);}
+.nav-item.active span{transform:translateY(-2px);}
+
+/* ========== MODAL & TOAST ========== */
+.cs-overlay{position:fixed;inset:0;z-index:500;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;}
+.cs-overlay.show{opacity:1;pointer-events:auto;}
+.cs-box{background:#fff;border-radius:24px;padding:28px 24px 22px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(15,23,42,.3);transform:scale(.85) translateY(20px);transition:transform .3s cubic-bezier(.2,.9,.3,1.4);border:3px solid #fce7f3;}
+.cs-overlay.show .cs-box{transform:scale(1) translateY(0);}
+.cs-hindi{font-family:var(--hindi);font-size:24px;font-weight:800;color:var(--primary);margin-bottom:4px;letter-spacing:-.3px;}
+.cs-hindi-sub{font-family:var(--hindi);font-size:13px;color:var(--text-muted);font-weight:600;margin-bottom:18px;}
+.cs-icon{width:88px;height:88px;border-radius:50%;margin:0 auto 16px;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 10px 24px rgba(219,39,119,.3);animation:csFloat 2s ease-in-out infinite;}
+@keyframes csFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.cs-english{font-size:21px;font-weight:800;color:var(--text);margin-bottom:4px;letter-spacing:-.3px;}
+.cs-english-sub{font-size:13px;color:var(--text-muted);font-weight:500;}
+.cs-divider{height:1px;background:linear-gradient(90deg,transparent,#e2e8f0,transparent);margin:18px 0 14px;}
+.cs-hindi-bottom{font-family:var(--hindi);font-size:14px;color:var(--text-muted);font-weight:600;margin-bottom:18px;line-height:1.6;}
+.cs-btn{width:100%;height:48px;border-radius:14px;background:linear-gradient(135deg,#ec4899,#db2777);color:#fff;font-weight:700;font-size:15px;box-shadow:0 6px 0 #831843;transition:.1s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cs-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #831843;}
+
+/* AI / Contact Modal Specific */
+.ai-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;border-bottom:2px solid #f1f5f9;padding-bottom:12px;}
+.ai-header i{width:40px;height:40px;background:var(--primary-bg);color:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.ai-header h3{font-size:18px;font-weight:800;color:var(--text);margin:0;}
+.contact-actions{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.contact-btn-wa{width:100%;height:50px;border-radius:14px;background:#25d366;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;box-shadow:0 4px 0 #128c7e;}
+.contact-btn-wa:active{transform:translateY(4px);box-shadow:0 1px 0 #128c7e;}
+.contact-btn-call{width:100%;height:50px;border-radius:14px;background:#3b82f6;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;box-shadow:0 4px 0 #1e3a8a;}
+.contact-btn-call:active{transform:translateY(4px);box-shadow:0 1px 0 #1e3a8a;}
+
+.toast{position:absolute;left:50%;bottom:90px;transform:translate(-50%,20px);background:#0f172a;color:#fff;padding:14px 24px;border-radius:14px;font-size:13.5px;font-weight:600;max-width:85%;text-align:center;opacity:0;pointer-events:none;transition:.3s;z-index:600;box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+.toast.success{background:var(--primary);box-shadow:0 8px 24px rgba(219,39,119,.4);}
+
+/* WATERMARK */
+.watermark {text-align:center;font-size:11px;color:#94a3b8;font-weight:600;margin-top:20px;margin-bottom:10px;opacity:0.8;letter-spacing:0.5px;}
+.watermark b {color:var(--primary);font-weight:800;}
+
+/* FAB SUPPORT BUTTON */
+.fab-support{position:fixed;right:16px;bottom:80px;width:56px;height:56px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 6px 16px rgba(219,39,119,.4);z-index:100;border:3px solid #fff;animation:float 3s infinite;}
+
+@media(max-width:359px){
+  .grid-3{gap:8px;}
+  .grid-item{padding:12px 6px;}
+  .grid-icon{width:46px;height:46px;font-size:19px;}
+  .grid-label{font-size:10.5px;}
+  .auth-hero h1{font-size:23px;}
+  .auth-logo{width:90px;height:90px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== BLOCKED SCREEN ========== -->
+<div id="blockedScreen" class="hidden">
+  <div class="lock-icon"><i class="fas fa-ban"></i></div>
+  <h1>Account Blocked!</h1>
+  <p>Aapko owner dwara block kar diya gaya hai. Kripya support se sampark karein.</p>
+  <a href="https://wa.me/918252780452" class="contact-btn"><i class="fa-brands fa-whatsapp"></i> Contact Support</a>
+</div>
+
+<!-- ========== AUTH SCREEN ========== -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-shape s1"></div>
+  <div class="auth-shape s2"></div>
+  <div class="auth-hero">
+    <div class="auth-logo">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="#ffffff"/>
+        <circle cx="50" cy="50" r="46" fill="url(#pinkGrad)"/>
+        <path d="M20 60 Q50 40 80 60 L80 70 Q50 50 20 70 Z" fill="#ffffff" opacity="0.9"/>
+        <path d="M50 30 L85 45 L50 60 L15 45 Z" fill="#831843"/>
+        <rect x="47" y="35" width="6" height="15" fill="#fbbf24"/>
+        <circle cx="50" cy="50" r="4" fill="#fbbf24"/>
+        <text x="50" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">JMKCC</text>
+        <defs><linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs>
+      </svg>
+    </div>
+    <h1>JMKCC Study</h1>
+    <p>Jay Maa Kali Coaching Center</p>
+  </div>
+  <div class="auth-card">
+    <div class="verify-head">
+      <h2>Welcome</h2>
+      <p>Apni details bharke aage badhein</p>
+    </div>
+    <form id="verifyForm" class="auth-form" autocomplete="on">
+      <div class="form-group">
+        <label for="vName">Full Name</label>
+        <div class="input-wrap"><i class="fas fa-user lead"></i><input type="text" id="vName" placeholder="Aapka poora naam" autocomplete="name" spellcheck="false"></div>
+      </div>
+      <div class="form-group">
+        <label for="vMobile">Mobile Number</label>
+        <div class="input-wrap"><i class="fas fa-mobile-alt lead"></i><input type="tel" id="vMobile" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10" autocomplete="tel"></div>
+      </div>
+      <div class="form-group">
+        <label for="vPass">Password</label>
+        <div class="input-wrap pass-wrap">
+          <i class="fas fa-lock lead"></i>
+          <input type="password" id="vPass" placeholder="Kam se kam 6 characters" autocomplete="current-password">
+          <button type="button" class="pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="form-error" id="verifyError"></div>
+      <button type="submit" class="btn-primary" id="verifyBtn"><i class="fas fa-shield-alt"></i> <span>Continue</span></button>
+      <a class="forgot-link" id="forgotPassLink">Forgot Password?</a>
+    </form>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD OVERLAY -->
+<div class="cs-overlay" id="forgotOverlay">
+  <div class="cs-box">
+    <div class="cs-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);"><i class="fas fa-key"></i></div>
+    <div class="cs-english">Reset Password</div>
+    <p class="cs-english-sub" style="margin-bottom:16px;">Enter your registered mobile number. Owner will get a request on Telegram.</p>
+    <div class="form-group" style="text-align:left; margin-bottom:16px;">
+      <div class="input-wrap"><i class="fas fa-mobile-alt lead"></i><input type="tel" id="forgotMobile" placeholder="10-digit mobile" maxlength="10"></div>
+    </div>
+    <button class="cs-btn" id="forgotSubmitBtn"><i class="fas fa-paper-plane"></i> SEND REQUEST</button>
+    <button class="btn-ghost" style="margin-top:10px; height:40px; font-size:13px;" onclick="document.getElementById('forgotOverlay').classList.remove('show')">Cancel</button>
+  </div>
+</div>
+
+<!-- VERIFYING OVERLAY -->
+<div class="verifying-overlay" id="verifyingOverlay">
+  <div class="verifying-box" id="verifyingBox"></div>
+</div>
+
+<!-- APP SCREEN -->
+<div id="appScreen" class="app-screen hidden">
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    <div class="brand">
+      <div class="brand-logo" id="brandLogo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="48" fill="#ffffff"/>
+          <circle cx="50" cy="50" r="46" fill="url(#pinkGrad2)"/>
+          <path d="M20 60 Q50 40 80 60 L80 70 Q50 50 20 70 Z" fill="#ffffff" opacity="0.9"/>
+          <path d="M50 30 L85 45 L50 60 L15 45 Z" fill="#831843"/>
+          <rect x="47" y="35" width="6" height="15" fill="#fbbf24"/>
+          <circle cx="50" cy="50" r="4" fill="#fbbf24"/>
+          <text x="50" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">JMKCC</text>
+          <defs><linearGradient id="pinkGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="brand-text">JMKCC<span>Study</span></div>
+    </div>
+    <div class="topbar-right" style="display:flex; gap:8px; align-items:center;">
+      <button class="icon-btn" id="aiBtn" aria-label="AI Assistant" style="background:transparent; border:1.5px solid rgba(255,255,255,0.4);"><i class="fas fa-robot"></i></button>
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications" style="background:transparent; border:1.5px solid rgba(255,255,255,0.4);"><i class="fas fa-bell"></i></button>
+      <div class="class-badge">Class 12</div>
+    </div>
+  </header>
+
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer" id="sideDrawer">
+    <div class="drawer-head">
+      <div class="drawer-avatar" id="drawerAvatar">S</div>
+      <div><div class="drawer-name" id="drawerName">Student</div><div class="drawer-class">Class 12</div></div>
+    </div>
+    <nav class="drawer-nav">
+      <a data-page="profile"><i class="fas fa-user"></i> Student Profile</a>
+      <a data-page="home" class="active"><i class="fas fa-home"></i> Home</a>
+      <a data-page="freetest"><i class="fas fa-file-alt"></i> Free Test</a>
+      <a data-page="ncert"><i class="fas fa-book"></i> NCERT Books</a>
+      <a data-page="notes"><i class="fas fa-sticky-note"></i> Free Notes</a>
+      <a data-page="social"><i class="fas fa-share-alt"></i> Social Links</a>
+      <a data-cs><i class="fas fa-shopping-bag"></i> Purchases</a>
+      <a data-cs><i class="fas fa-video"></i> Upcoming Class</a>
+      <a data-cs><i class="fas fa-comments"></i> Chat</a>
+      <a data-cs><i class="fas fa-chart-line"></i> Progress Report</a>
+      <a data-cs><i class="fas fa-cog"></i> Settings</a>
+      <a data-cs><i class="fas fa-gift"></i> Refer &amp; Earn</a>
+    </nav>
+  </aside>
+
+  <main class="main-content" id="mainContent">
+    <!-- HOME -->
+    <section id="page-home" class="page active">
+      <div class="welcome">
+        <div class="welcome-hello">Hi, <span id="welcomeName">Student</span> 👋</div>
+        <div class="welcome-sub">Class 12 padhai shuru karein</div>
+      </div>
+      
+      <!-- Main Banner -->
+      <div class="main-banner" id="mainBanner">
+        <div class="mb-logo" id="bannerLogo">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#ffffff"/>
+            <circle cx="50" cy="50" r="46" fill="url(#pinkGrad3)"/>
+            <path d="M20 60 Q50 40 80 60 L80 70 Q50 50 20 70 Z" fill="#ffffff" opacity="0.9"/>
+            <path d="M50 30 L85 45 L50 60 L15 45 Z" fill="#831843"/>
+            <rect x="47" y="35" width="6" height="15" fill="#fbbf24"/>
+            <circle cx="50" cy="50" r="4" fill="#fbbf24"/>
+            <text x="50" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">JMKCC</text>
+            <defs><linearGradient id="pinkGrad3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="mb-text">
+          <div class="mb-title">JMKCC Study</div>
+          <div class="mb-fullform">Jay Maa Kali Coaching Center</div>
+          <div class="mb-tag"><i class="fas fa-star"></i> Class 12 Special</div>
+        </div>
+      </div>
+      
+      <div class="section-head"><div class="section-title">Study Materials</div></div>
+      <div class="grid-3" id="homeGrid"></div>
+    </section>
+
+    <!-- NCERT -->
+    <section id="page-ncert" class="page">
+      <div class="page-header">
+        <button class="page-back" data-back><i class="fas fa-arrow-left"></i></button>
+        <div class="page-title">NCERT Books <small>Class 12</small></div>
+      </div>
+      <div id="ncertList"></div>
+    </section>
+
+    <!-- NOTES -->
+    <section id="page-notes" class="page">
+      <div class="page-header">
+        <button class="page-back" data-back><i class="fas fa-arrow-left"></i></button>
+        <div class="page-title">Free Notes <small>Quick revision</small></div>
+      </div>
+      <div id="notesList"></div>
+    </section>
+
+    <!-- SOCIAL -->
+    <section id="page-social" class="page">
+      <div class="page-header">
+        <button class="page-back" data-back><i class="fas fa-arrow-left"></i></button>
+        <div class="page-title">Social Links <small>Follow us everywhere</small></div>
+      </div>
+      <div class="social-grid" id="socialGrid"></div>
+    </section>
+
+    <!-- FREE TEST -->
+    <section id="page-freetest" class="page">
+      <div class="page-header">
+        <button class="page-back" data-back><i class="fas fa-arrow-left"></i></button>
+        <div class="page-title">Free Test <small>Class 12 Practice</small></div>
+      </div>
+      
+      <!-- Subject Selector -->
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Select Subject</label>
+        <select id="testSubjectSelect" class="field" style="height:48px; padding:0 14px; border-radius:12px; border:2px solid #fce7f3; background:#fff; font-weight:700; color:var(--primary); font-family:inherit; width:100%; outline:none;">
+          <option value="Maths">Maths</option>
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Biology">Biology</option>
+          <option value="English">English</option>
+          <option value="Hindi">Hindi</option>
+        </select>
+      </div>
+
+      <div id="testContainer">
+        <div class="test-card" style="text-align:center;">
+          <i class="fas fa-file-alt" style="font-size:50px;color:var(--primary);margin-bottom:16px;"></i>
+          <h2 style="font-size:20px;margin-bottom:8px;">Ready to Start?</h2>
+          <p style="font-size:14px;color:#64748b;margin-bottom:20px;">Test shuru karne ke liye niche button dabayein.</p>
+          <button class="btn-primary" onclick="startTest()" style="max-width:200px;margin:0 auto;">Start Test</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="page-profile" class="page">
+      <div class="page-header">
+        <button class="page-back" data-back><i class="fas fa-arrow-left"></i></button>
+        <div class="page-title">Student Profile <small>Your details</small></div>
+      </div>
+      <div class="profile-hero">
+        <div class="profile-avatar" id="profAvatar">S</div>
+        <div class="profile-name" id="profName">Student</div>
+        <div class="profile-sub">Class 12 · JMKCC Study</div>
+      </div>
+      <div class="info-card">
+        <div class="info-row"><i class="fas fa-user"></i><div class="info-label">Full Name</div><div class="info-value" id="infoName">Student</div></div>
+        <div class="info-row"><i class="fas fa-mobile-alt"></i><div class="info-label">Mobile</div><div class="info-value" id="infoMobile">—</div></div>
+        <div class="info-row"><i class="fas fa-graduation-cap"></i><div class="info-label">Class</div><div class="info-value">Class 12</div></div>
+      </div>
+      <button class="btn-share" id="shareBtn"><i class="fa-brands fa-telegram"></i> Share on Telegram</button>
+      <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </section>
+
+    <!-- WATERMARK -->
+    <div class="watermark">Powered by <b>Sonu</b></div>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-page="home"><i class="fas fa-home"></i><span>Home</span></div>
+    <div class="nav-item" data-page="freetest"><i class="fas fa-file-alt" style="font-size:22px; color:var(--primary); filter: drop-shadow(0 2px 4px rgba(219,39,119,.4));"></i><span>Free Test</span></div>
+    <div class="nav-item" data-page="ncert"><i class="fas fa-book"></i><span>NCERT</span></div>
+    <div class="nav-item" data-page="profile"><i class="fas fa-user"></i><span>Profile</span></div>
+  </nav>
+</div>
+
+<!-- AI ASSISTANT MODAL -->
+<div class="cs-overlay" id="aiOverlay">
+  <div class="cs-box" style="padding:22px;">
+    <div class="ai-header">
+      <i class="fas fa-robot"></i>
+      <h3>AI Assistant & Support</h3>
+    </div>
+    
+    <p style="text-align:left; font-size:13.5px; color:var(--text-muted); margin-bottom:12px; font-weight:600;">
+      Apna number daalein aur direct WhatsApp par sampark karein:
+    </p>
+    
+    <div class="form-group" style="text-align:left; margin-bottom:16px;">
+      <div class="input-wrap" style="border:1.5px solid #e2e8f0;">
+        <i class="fas fa-mobile-alt lead"></i>
+        <input type="tel" id="aiUserMobile" placeholder="Aapka 10-digit number" maxlength="10">
+      </div>
+    </div>
+
+    <div class="contact-actions">
+      <a href="javascript:void(0)" id="aiWaBtn" class="contact-btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp Support</a>
+      <a href="tel:+918252780452" class="contact-btn-call"><i class="fas fa-phone"></i> Call Us</a>
+    </div>
+    
+    <div style="background:#f8fafc; border-radius:12px; padding:12px; margin-bottom:16px; text-align:left;">
+      <p style="font-size:12px; color:#64748b; margin-bottom:6px; font-weight:700;">Support Number:</p>
+      <p style="font-size:15px; color:var(--primary); font-weight:800; letter-spacing:1px;">+91 82527 80452</p>
+    </div>
+
+    <button class="cs-btn" style="background:#f1f5f9; color:#64748b; box-shadow:none; border:2px solid #e2e8f0;" onclick="document.getElementById('aiOverlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<!-- COMING SOON / NOTICE -->
+<div class="cs-overlay" id="csOverlay">
+  <div class="cs-box">
+    <div class="cs-hindi" id="csTitleHi">जल्द आ रहा है</div>
+    <div class="cs-hindi-sub" id="csSubHi">कुछ नया आने वाला है</div>
+    <div class="cs-icon"><i class="fas fa-hourglass-half"></i></div>
+    <div class="cs-english" id="csTitleEn">Coming Soon</div>
+    <div class="cs-english-sub" id="csSubEn">Something new is on the way</div>
+    <div class="cs-divider"></div>
+    <div class="cs-hindi-bottom" id="csBottomHi">जल्द आ रहा है — कृपया प्रतीक्षा करें</div>
+    <button class="cs-btn" id="csCloseBtn"><i class="fas fa-check"></i> ठीक है / OK</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzVi-NNFFSBQxTfU7NBARTwpLHLXMtzMlyMVFvpvdhkRqwrjQZF8VBZZ2R0r02jPQjz/exec';
+  const TELEGRAM_BOT_TOKEN = '8864112645:AAHTMjpWSfPxhqAB8pkgwm-j49OXAGWs1zI';
+  const TELEGRAM_CHAT_ID = '8709228094';
+
+  const STORAGE_KEY = 'jmkcc_study_users_v5';
+  const SESSION_KEY = 'jmkcc_study_session_v5';
+
+  const state = { user: null, currentTest: null };
+  const $  = (s, c=document) => c.querySelector(s);
+  const $$ = (s, c=document) => [...c.querySelectorAll(s)];
+  const isMobile = s => /^[6-9]\d{9}$/.test(s);
+  const initials = n => (n || 'S').trim().split(/\s+/).map(w => w[0]).join('').slice(0,2).toUpperCase();
+  const uid = () => 'id_' + Math.random().toString(36).slice(2, 10);
+
+  function toast(msg, type = 'info') {
+    const el = $('#toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'toast show ' + type;
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.className = 'toast'; }, 2400);
+  }
+
+  window.showComingSoon = function(titleHi, subHi, titleEn, subEn) { 
+      if(titleHi) $('#csTitleHi').textContent = titleHi;
+      if(subHi) $('#csSubHi').textContent = subHi;
+      if(titleEn) $('#csTitleEn').textContent = titleEn;
+      if(subEn) $('#csSubEn').textContent = subEn;
+      $('#csOverlay').classList.add('show'); 
+  };
+  function hideComingSoon() { 
+      $('#csOverlay').classList.remove('show'); 
+      setTimeout(() => {
+          $('#csTitleHi').textContent = "जल्द आ रहा है";
+          $('#csSubHi').textContent = "कुछ नया आने वाला है";
+          $('#csTitleEn').textContent = "Coming Soon";
+          $('#csSubEn').textContent = "Something new is on the way";
+      }, 300);
+  }
+
+  /* =========================================================
+     TELEGRAM POLLING (FAST 1.5s) & COMMANDS
+     ========================================================= */
+  let lastTgUpdateId = 0;
+  
+  function pollTelegram() {
+    if(!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes('YAHAN')) return;
+    
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastTgUpdateId + 1}&timeout=0`)
+    .then(r => r.json())
+    .then(data => {
+      if(data.ok && data.result.length > 0) {
+        data.result.forEach(up => {
+          lastTgUpdateId = up.update_id;
+          if(up.message && String(up.message.chat.id) === TELEGRAM_CHAT_ID) {
+            handleTgCommand(up.message.text);
+          }
+        });
+      }
+    }).catch(e => {});
+    
+    // Fast Polling: 1.5 Seconds
+    setTimeout(pollTelegram, 1500);
+  }
+
+  function handleTgCommand(text) {
+    if (!text) return;
+    
+    // 1. Block Command: /block <mobile>
+    if(text.startsWith('/block ')) {
+      const m = text.replace('/block ', '').trim();
+      if(isMobile(m)) {
+        let blocked = JSON.parse(localStorage.getItem('jmkcc_blocked') || '[]');
+        if(!blocked.includes(m)) blocked.push(m);
+        localStorage.setItem('jmkcc_blocked', JSON.stringify(blocked));
+        toast(`User ${m} Blocked!`, "error");
+        checkBlockStatus();
+      }
+    }
+
+    // 2. Unblock Command: /unblock <mobile>
+    if(text.startsWith('/unblock ')) {
+      const m = text.replace('/unblock ', '').trim();
+      let blocked = JSON.parse(localStorage.getItem('jmkcc_blocked') || '[]');
+      blocked = blocked.filter(num => num !== m);
+      localStorage.setItem('jmkcc_blocked', JSON.stringify(blocked));
+      toast(`User ${m} Unblocked!`, "success");
+      checkBlockStatus();
+    }
+
+    // 3. Set Logo
+    if(text.startsWith('/setlogo ')) {
+      const url = text.replace('/setlogo ', '').trim();
+      localStorage.setItem('jmkcc_logo_url', url);
+      applyImages();
+    }
+
+    // 4. Set Banner
+    if(text.startsWith('/setbanner ')) {
+      const url = text.replace('/setbanner ', '').trim();
+      localStorage.setItem('jmkcc_banner_url', url);
+      applyImages();
+    }
+
+    // 5. Notice
+    if(text.startsWith('/notice ')) {
+      const msg = text.replace('/notice ', '');
+      showComingSoon("Owner Message", "From Admin", msg, "Please read carefully");
+    }
+    
+    // 6. Set Test Time (in minutes)
+    if(text.startsWith('/settime ')) {
+      const mins = parseInt(text.replace('/settime ', ''));
+      if(mins > 0) localStorage.setItem('jmkcc_test_time', mins * 60);
+    }
+  }
+
+  function checkBlockStatus() {
+    if(!state.user) return;
+    const blocked = JSON.parse(localStorage.getItem('jmkcc_blocked') || '[]');
+    if(blocked.includes(state.user.mobile)) {
+      $('#blockedScreen').classList.remove('hidden');
+      $('#appScreen').classList.add('hidden');
+      $('#authScreen').classList.add('hidden');
+    } else {
+      $('#blockedScreen').classList.add('hidden');
+    }
+  }
+
+  function applyImages() {
+    const logo = localStorage.getItem('jmkcc_logo_url');
+    if(logo) {
+      if($('brandLogo')) $('brandLogo').innerHTML = `<img src="${logo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      if($('bannerLogo')) $('bannerLogo').innerHTML = `<img src="${logo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    }
+    const banner = localStorage.getItem('jmkcc_banner_url');
+    if(banner) {
+      if($('mainBanner')) $('mainBanner').style.background = `url('${banner}') center/cover`;
+    }
+  }
+
+  pollTelegram(); // Start polling
+
+  /* ---------- SEND TELEGRAM ---------- */
+  function sendTelegramMessage(text) {
+    if(!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN.includes('YAHAN')) return;
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: 'HTML' })
+    }).catch(err => {});
+  }
+
+  /* ---------- FETCH TEST DATA ---------- */
+  async function fetchQuestionsFromSheet(subject) {
+    try {
+      if(GOOGLE_SHEET_URL === 'YAHAN_APNA_EXEC_URL_DALEIN') return [];
+      const url = new URL(GOOGLE_SHEET_URL);
+      url.searchParams.append('action', 'getQuestions');
+      url.searchParams.append('subject', subject);
+      const res = await fetch(url.toString());
+      const data = await res.json();
+      return data.data || [];
+    } catch (e) { return []; }
+  }
+
+  /* ---------- SAVE RESULT ---------- */
+  async function saveResultToSheet(name, mobile, subject, score, total) {
+    try {
+      if(GOOGLE_SHEET_URL === 'YAHAN_APNA_EXEC_URL_DALEIN') return;
+      const url = new URL(GOOGLE_SHEET_URL);
+      url.searchParams.append('action', 'saveResult');
+      url.searchParams.append('name', name);
+      url.searchParams.append('mobile', mobile);
+      url.searchParams.append('subject', subject);
+      url.searchParams.append('score', score);
+      url.searchParams.append('total', total);
+      await fetch(url.toString());
+    } catch (e) {}
+  }
+
+  /* ---------- AUTH ---------- */
+  const AuthAPI = {
+    getUsers() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } },
+    saveUsers(u) { localStorage.setItem(STORAGE_KEY, JSON.stringify(u)); },
+    findUser(m) { return this.getUsers().find(u => u.mobile === m); },
+    async verify({ name, mobile, password }) {
+      const blocked = JSON.parse(localStorage.getItem('jmkcc_blocked') || '[]');
+      if(blocked.includes(mobile)) {
+        throw new Error('Aapka account block hai. Support se baat karein.');
+      }
+
+      const existing = this.findUser(mobile);
+      if (existing) {
+        if (existing.password !== password) throw new Error('Galat Password!');
+        if (existing.name !== name) {
+          const users = this.getUsers();
+          const idx = users.findIndex(u => u.id === existing.id);
+          if (idx >= 0) { users[idx].name = name; this.saveUsers(users); existing.name = name; }
+        }
+        return { user: existing, isNew: false };
+      }
+      
+      const user = { id: uid(), name: name.trim(), mobile: mobile.trim(), password, joinedAt: new Date().toISOString() };
+      const users = this.getUsers();
+      users.push(user);
+      this.saveUsers(users);
+
+      const msg = `🆕 <b>Naya Student Registered!</b>\n\n👤 <b>Name:</b> ${name}\n📱 <b>Mobile:</b> ${mobile}\n🔑 <b>Pass:</b> ${password}`;
+      sendTelegramMessage(msg);
+
+      return { user, isNew: true };
+    },
+    saveSession(u) { localStorage.setItem(SESSION_KEY, JSON.stringify({ userId: u.id })); },
+    getSession() {
+      try {
+        const s = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+        if (!s) return null;
+        return this.getUsers().find(u => u.id === s.userId) || null;
+      } catch { return null; }
+    },
+    clearSession() { localStorage.removeItem(SESSION_KEY); }
+  };
+
+  /* ---------- TEST LOGIC (BLUE SELECT, NO HINTS, TIMER) ---------- */
+  let testTimerInterval = null;
+
+  window.startTest = async function() {
+    const subject = $('#testSubjectSelect').value;
+    $('#testContainer').innerHTML = `<div class="test-card" style="text-align:center;"><div class="verifying-spinner" style="border-color:#e2e8f0; border-top-color:var(--primary);"></div><p style="margin-top:16px; font-weight:600; color:var(--primary);">Questions load ho rahe hain...</p></div>`;
+    
+    const questions = await fetchQuestionsFromSheet(subject);
+    
+    if(questions.length === 0) {
+      $('#testContainer').innerHTML = `<div class="test-card" style="text-align:center;">
+        <i class="fas fa-exclamation-circle" style="font-size:40px;color:var(--danger);margin-bottom:16px;"></i>
+        <h2 style="font-size:18px;">No Questions Found</h2>
+        <p style="font-size:14px;color:#64748b;">Is subject ke liye abhi koi question add nahi kiya gaya hai.</p>
+      </div>`;
+      return;
+    }
+
+    const testTime = parseInt(localStorage.getItem('jmkcc_test_time') || '3600');
+    state.currentTest = { questions, qIndex: 0, score: 0, selectedOption: -1, subject, timeLeft: testTime };
+    
+    renderTestQuestion();
+    startTestTimer();
+  }
+
+  function startTestTimer() {
+    if(testTimerInterval) clearInterval(testTimerInterval);
+    testTimerInterval = setInterval(() => {
+      state.currentTest.timeLeft--;
+      const t = state.currentTest.timeLeft;
+      const m = Math.floor(t/60);
+      const s = t%60;
+      const el = $('#testTimerDisplay');
+      if(el) el.innerHTML = `<i class="fas fa-clock"></i> ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+      
+      if(t <= 0) {
+        clearInterval(testTimerInterval);
+        submitTest(true);
+      }
+    }, 1000);
+  }
+
+  function renderTestQuestion() {
+    const ct = state.currentTest;
+    if (ct.qIndex >= ct.questions.length) return submitTest();
+    
+    const q = ct.questions[ct.qIndex];
+    ct.selectedOption = -1;
+
+    let optionsHTML = q.options.map((opt, i) => `
+      <button class="option-btn" onclick="selectOption(${i}, this)">${opt}</button>
+    `).join('');
+
+    const t = ct.timeLeft;
+    const m = Math.floor(t/60);
+    const s = t%60;
+    const timeStr = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+
+    $('#testContainer').innerHTML = `
+      <div class="test-card">
+        <div class="test-header">
+          <div style="font-weight:800;font-size:16px; color:var(--primary);">Practice Test</div>
+          <div class="test-q-count" id="testTimerDisplay"><i class="fas fa-clock"></i> ${timeStr}</div>
+        </div>
+        <div class="q-text">${q.question}</div>
+        <div class="options">${optionsHTML}</div>
+        <div class="test-footer">
+          <button class="btn-next" id="nextBtn" disabled onclick="nextQuestion()">
+            ${ct.qIndex === ct.questions.length - 1 ? 'Submit Test' : 'Next Question'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  window.selectOption = function(idx, btnEl) {
+    const ct = state.currentTest;
+    ct.selectedOption = idx;
+    
+    const allBtns = btnEl.parentElement.querySelectorAll('.option-btn');
+    allBtns.forEach(b => b.classList.remove('selected'));
+    btnEl.classList.add('selected');
+    
+    $('#nextBtn').disabled = false;
+  };
+
+  window.nextQuestion = function() {
+    const ct = state.currentTest;
+    if(ct.selectedOption === -1) return;
+    
+    if(ct.selectedOption === ct.questions[ct.qIndex].correct) ct.score++;
+    
+    ct.qIndex++;
+    if(ct.qIndex >= ct.questions.length) {
+      submitTest();
+    } else {
+      renderTestQuestion();
+    }
+  };
+
+  async function submitTest(isAuto = false) {
+    if(testTimerInterval) clearInterval(testTimerInterval);
+    const ct = state.currentTest;
+    
+    await saveResultToSheet(state.user.name, state.user.mobile, ct.subject, ct.score, ct.questions.length);
+    
+    const msg = `📝 <b>Test ${isAuto ? 'Auto-Submitted (Time Up)' : 'Completed'}</b>\n\n👤 <b>Name:</b> ${state.user.name}\n📱 <b>Mobile:</b> ${state.user.mobile}\n📚 <b>Subject:</b> ${ct.subject}\n🎯 <b>Score:</b> ${ct.score} / ${ct.questions.length}`;
+    sendTelegramMessage(msg);
+    
+    $('#testContainer').innerHTML = `
+      <div class="test-card" style="text-align:center;">
+        <i class="fas fa-trophy" style="font-size:50px;color:#fbbf24;margin-bottom:16px;"></i>
+        <h2 style="font-size:22px;margin-bottom:8px;">Test Submitted!</h2>
+        <p style="font-size:14px;color:#64748b;margin-bottom:20px;">${isAuto ? 'Time up ho gaya tha, auto-submit.' : 'Result record kar liya gaya hai.'}</p>
+        <button class="btn-primary" onclick="startTest()" style="max-width:200px;margin:0 auto;">Restart Test</button>
+      </div>
+    `;
+  }
+
+  /* ---------- RENDERERS ---------- */
+  const NCERT_DATA = [
+    { title: 'भौतिकी (Physics)', sub: 'NCERT Book · Class 12', icon: 'fa-atom', bg: 'linear-gradient(135deg,#3b82f6,#1e40af)' },
+    { title: 'रसायन शास्त्र (Chemistry)', sub: 'NCERT Book · Class 12', icon: 'fa-flask', bg: 'linear-gradient(135deg,#10b981,#059669)' },
+    { title: 'गणित (Maths) / जीव विज्ञान (Biology)', sub: 'NCERT Book · Class 12', icon: 'fa-dna', bg: 'linear-gradient(135deg,#f59e0b,#d97706)' },
+    { title: 'हिंदी (Hindi)', sub: 'NCERT Book · Class 12', icon: 'fa-book-open', bg: 'linear-gradient(135deg,#ef4444,#dc2626)' },
+    { title: 'अंग्रेजी (English)', sub: 'NCERT Book · Class 12', icon: 'fa-language', bg: 'linear-gradient(135deg,#8b5cf6,#7c3aed)' }
+  ];
+
+  const NOTES_DATA = [
+    { title: 'Physics Formula Sheet', sub: '12 pages · PDF', icon: 'fa-file-pdf', bg: 'linear-gradient(135deg,#ef4444,#b91c1c)' },
+    { title: 'Organic Chemistry Reactions', sub: '8 pages · PDF', icon: 'fa-file-alt', bg: 'linear-gradient(135deg,#10b981,#059669)' },
+    { title: 'Maths Theorems & Proofs', sub: '15 pages · PDF', icon: 'fa-file-lines', bg: 'linear-gradient(135deg,#6366f1,#4f46e5)' }
+  ];
+
+  const SOCIAL_DATA = [
+    { name: 'Instagram', icon: 'fa-instagram', bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', url: 'https://instagram.com/' },
+    { name: 'YouTube', icon: 'fa-youtube', bg: 'linear-gradient(135deg,#ef4444,#b91c1c)', url: 'https://youtube.com/' },
+    { name: 'Twitter / X', icon: 'fa-x-twitter', bg: 'linear-gradient(135deg,#1f2937,#0f172a)', url: 'https://twitter.com/' },
+    { name: 'Telegram', icon: 'fa-telegram', bg: 'linear-gradient(135deg,#229ED9,#0e7490)', url: 'https://telegram.org/' },
+    { name: 'WhatsApp', icon: 'fa-whatsapp', bg: 'linear-gradient(135deg,#25d366,#128c7e)', url: 'https://whatsapp.com/' },
+    { name: 'Facebook', icon: 'fa-facebook', bg: 'linear-gradient(135deg,#3b82f6,#1d4ed8)', url: 'https://facebook.com/' }
+  ];
+
+  const HOME_GRID = [
+    { page: null, label: 'Paid Course',    icon: 'fa-star',         bg: 'linear-gradient(135deg,#f59e0b,#d97706)' },
+    { page: null, label: 'Free Courses',   icon: 'fa-play-circle',  bg: 'linear-gradient(135deg,#10b981,#059669)' },
+    { page: 'ncert', label: 'NCERT Book',  icon: 'fa-book',         bg: 'linear-gradient(135deg,#3b82f6,#1e40af)' },
+    { page: null, label: 'Book Test',      icon: 'fa-pen-alt',      bg: 'linear-gradient(135deg,#8b5cf6,#7c3aed)' },
+    { page: null, label: 'Books',          icon: 'fa-book-open',    bg: 'linear-gradient(135deg,#ef4444,#dc2626)' },
+    { page: 'notes', label: 'Free Notes',  icon: 'fa-sticky-note',  bg: 'linear-gradient(135deg,#14b8a6,#0d9488)' },
+    { page: 'freetest', label: 'Free Test', icon: 'fa-file-alt',    bg: 'linear-gradient(135deg,#db2777,#be185d)' }, // Clickable Free Test
+    { page: null, label: 'Class Timetable',icon: 'fa-calendar-alt', bg: 'linear-gradient(135deg,#f97316,#ea580c)' },
+    { page: 'social', label: 'Social Links',icon: 'fa-share-alt',   bg: 'linear-gradient(135deg,#ec4899,#db2777)' }
+  ];
+
+  function renderHome() {
+    $('#welcomeName').textContent = state.user.name.split(' ')[0];
+    $('#homeGrid').innerHTML = HOME_GRID.map(item => {
+      const attr = item.page ? `data-page="${item.page}"` : 'data-cs';
+      return `
+        <div class="grid-item" ${attr}>
+          <div class="grid-icon" style="background:${item.bg}"><i class="fas ${item.icon}"></i></div>
+          <div class="grid-label">${item.label}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderNcert() {
+    $('#ncertList').innerHTML = NCERT_DATA.map(b => `
+      <div class="list-card" onclick="DISHA.showComingSoon()">
+        <div class="lc-icon" style="background:${b.bg}"><i class="fas ${b.icon}"></i></div>
+        <div class="lc-body"><div class="lc-title hindi">${b.title}</div><div class="lc-sub">${b.sub}</div></div>
+        <div class="btn-action"><i class="fas fa-download"></i> PDF</div>
+      </div>
+    `).join('');
+  }
+
+  function renderNotes() {
+    $('#notesList').innerHTML = NOTES_DATA.map(n => `
+      <div class="list-card" onclick="DISHA.toast('Downloading ${n.title}...', 'success')">
+        <div class="lc-icon" style="background:${n.bg}"><i class="fas ${n.icon}"></i></div>
+        <div class="lc-body"><div class="lc-title">${n.title}</div><div class="lc-sub">${n.sub}</div></div>
+        <div class="btn-action"><i class="fas fa-download"></i> PDF</div>
+      </div>
+    `).join('');
+  }
+
+  function renderSocial() {
+    $('#socialGrid').innerHTML = SOCIAL_DATA.map(s => `
+      <div class="social-card" onclick="window.open('${s.url}', '_blank')">
+        <div class="sc-icon" style="background:${s.bg}"><i class="fab ${s.icon}"></i></div>
+        <div class="sc-label">${s.name}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderProfile() {
+    const u = state.user;
+    $('#profAvatar').textContent = initials(u.name);
+    $('#profName').textContent = u.name;
+    $('#infoName').textContent = u.name;
+    $('#infoMobile').textContent = u.mobile;
+    $('#drawerName').textContent = u.name;
+    $('#drawerAvatar').textContent = initials(u.name);
+  }
+
+  /* ---------- ROUTING ---------- */
+  function navigateTo(page) {
+    $$('.page').forEach(p => p.classList.remove('active'));
+    const target = $('#page-' + page);
+    if (target) target.classList.add('active');
+    
+    $$('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === page));
+    $$('.drawer-nav a[data-page]').forEach(a => a.classList.toggle('active', a.dataset.page === page));
+    
+    $('#mainContent').scrollTop = 0;
+    closeDrawer();
+
+    if (page === 'home') renderHome();
+    else if (page === 'ncert') renderNcert();
+    else if (page === 'notes') renderNotes();
+    else if (page === 'social') renderSocial();
+    else if (page === 'profile') renderProfile();
+  }
+
+  function openDrawer() { $('#sideDrawer').classList.add('show'); $('#drawerOverlay').classList.add('show'); }
+  function closeDrawer() { $('#sideDrawer').classList.remove('show'); $('#drawerOverlay').classList.remove('show'); }
+
+  /* ---------- SHARE FEATURE (Telegram Link) ---------- */
+  function shareApp() {
+    const text = "Bhai, ye app try kar! Class 12 ke liye free test aur notes milte hain. Bahut badhiya hai! 🚀";
+    const url = window.location.href;
+    const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    
+    try {
+      window.open(tgUrl, '_blank');
+      toast("Opening Telegram...", "success");
+    } catch (e) {
+      navigator.clipboard.writeText(url)
+        .then(() => toast('Link copied to clipboard!', 'success'))
+        .catch(() => toast('Could not share', 'error'));
+    }
+  }
+
+  /* ---------- NOTIFICATION PERMISSION ---------- */
+  function requestNotificationPermission() {
+    if ("Notification" in window) {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+          new Notification("JMKCC Study", { body: "Notifications enabled successfully!" });
+          toast("Notifications Enabled", "success");
+        } else {
+          toast("Notifications blocked", "error");
+        }
+      });
+    } else {
+      toast("Aapka browser notifications support nahi karta", "error");
+    }
+  }
+
+  /* ---------- VERIFY / AUTH UI ---------- */
+  function showVerifying() { $('#verifyingOverlay').classList.add('show'); $('#verifyingBox').innerHTML = `<div class="verifying-spinner"></div><div class="verifying-text">Verifying…</div>`; }
+  function showVerified() { $('#verifyingBox').innerHTML = `<div class="verifying-check"><i class="fas fa-check"></i></div><div class="verifying-text">Verified!</div>`; }
+  function hideVerifying() { $('#verifyingOverlay').classList.remove('show'); }
+
+  function bindVerify() {
+    $$('.pass-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const input = btn.parentElement.querySelector('input');
+        const isPass = input.type === 'password';
+        input.type = isPass ? 'text' : 'password';
+        btn.innerHTML = `<i class="fas fa-${isPass ? 'eye-slash' : 'eye'}"></i>`;
+      });
+    });
+
+    $('#vMobile').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10); });
+
+    $('#verifyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = $('#vName').value.trim();
+      const mobile = $('#vMobile').value.trim();
+      const pass = $('#vPass').value;
+      const err = $('#verifyError');
+      err.textContent = '';
+
+      if (name.length < 3) { err.textContent = 'Please enter your full name.'; return; }
+      if (!isMobile(mobile)) { err.textContent = 'Enter a valid 10-digit mobile number.'; return; }
+      if (pass.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+
+      const btn = $('#verifyBtn');
+      btn.disabled = true;
+      
+      try {
+        const { user, isNew } = await AuthAPI.verify({ name, mobile, password: pass });
+        AuthAPI.saveSession(user);
+        state.user = user;
+        
+        showVerifying();
+        setTimeout(() => {
+          showVerified();
+          setTimeout(() => {
+            hideVerifying();
+            startApp();
+            toast(isNew ? 'Registration Successful!' : 'Welcome back!', 'success');
+            btn.disabled = false;
+          }, 500);
+        }, 800);
+      } catch (ex) {
+        err.textContent = ex.message;
+        btn.disabled = false;
+      }
+    });
+  }
+
+  /* ---------- FORGOT PASSWORD FLOW ---------- */
+  function bindForgot() {
+    $('#forgotPassLink').addEventListener('click', () => {
+      $('#forgotOverlay').classList.add('show');
+      $('#forgotMobile').value = '';
+    });
+
+    $('#forgotSubmitBtn').addEventListener('click', () => {
+      const m = $('#forgotMobile').value.trim();
+      if(!isMobile(m)) {
+        toast('Enter valid mobile number', 'error');
+        return;
+      }
+      
+      const userExists = AuthAPI.findUser(m);
+      if(!userExists) {
+        toast('Ye number register nahi hai!', 'error');
+        return;
+      }
+
+      const msg = `🔐 <b>Password Reset Request</b>\n\n👤 Name: ${userExists.name}\n📱 Mobile: ${m}\n\n<i>User forgot password.</i>`;
+      sendTelegramMessage(msg);
+
+      const newPass = prompt("Owner ko request bhej di gayi hai. Apna naya password enter karein:");
+      
+      if (newPass && newPass.length >= 6) {
+        const users = AuthAPI.getUsers();
+        const idx = users.findIndex(u => u.mobile === m);
+        if(idx >= 0) {
+          users[idx].password = newPass;
+          AuthAPI.saveUsers(users);
+          toast('Password Reset Successfully!', 'success');
+          $('#forgotOverlay').classList.remove('show');
+          sendTelegramMessage(`✅ <b>Password Changed!</b>\n\nMobile: ${m}\nNew Pass: ${newPass}`);
+        }
+      } else if (newPass !== null) {
+        toast('Password must be 6 characters', 'error');
+      }
+    });
+  }
+
+  /* ---------- AI ASSISTANT BINDING ---------- */
+  function bindAI() {
+    $('#aiBtn').addEventListener('click', () => {
+      $('#aiUserMobile').value = state.user ? state.user.mobile : '';
+      $('#aiOverlay').classList.add('show');
+    });
+
+    $('#aiWaBtn').addEventListener('click', () => {
+      const userNum = $('#aiUserMobile').value.trim();
+      const supportNum = '918252780452';
+      
+      let msg = `Hello JMKCC Support, I need help.`;
+      if(userNum) {
+        msg += ` My number is ${userNum}.`;
+      }
+      
+      const waUrl = `https://wa.me/${supportNum}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    });
+  }
+
+  function startApp() {
+    $('#authScreen').classList.add('hidden');
+    $('#appScreen').classList.remove('hidden');
+    applyImages();
+    navigateTo('home');
+    bindAppUI();
+    checkBlockStatus(); // Check block on start
+  }
+
+  function logout() {
+    AuthAPI.clearSession();
+    state.user = null;
+    $('#appScreen').classList.add('hidden');
+    $('#authScreen').classList.remove('hidden');
+    $('#verifyForm').reset();
+    closeDrawer();
+    toast('Logged out successfully', 'success');
+  }
+
+  function bindAppUI() {
+    if (bindAppUI._bound) return;
+    bindAppUI._bound = true;
+
+    $('#menuBtn').addEventListener('click', openDrawer);
+    $('#drawerOverlay').addEventListener('click', closeDrawer);
+    $('#logoutBtn').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+    
+    $('#shareBtn').addEventListener('click', shareApp);
+    $('#notifBtn').addEventListener('click', requestNotificationPermission);
+
+    $$('.drawer-nav a[data-page]').forEach(a => a.addEventListener('click', (e) => {
+      e.preventDefault(); navigateTo(a.dataset.page);
+    }));
+
+    $$('.nav-item[data-page]').forEach(n => n.addEventListener('click', () => navigateTo(n.dataset.page)));
+    $$('[data-back]').forEach(b => b.addEventListener('click', () => navigateTo('home')));
+
+    $('#csCloseBtn').addEventListener('click', hideComingSoon);
+    $('#csOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) hideComingSoon(); });
+
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-cs]');
+      if (el) { e.preventDefault(); e.stopPropagation(); showComingSoon(); }
+    }, true);
+  }
+
+  function init() {
+    bindVerify();
+    bindForgot();
+    bindAI();
+    
+    const sessUser = AuthAPI.getSession();
+    if (sessUser) {
+      state.user = sessUser;
+      startApp();
+    } else {
+      $('#authScreen').classList.remove('hidden');
+      $('#appScreen').classList.add('hidden');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  window.DISHA = { toast, navigateTo, state, showComingSoon };
+})();
+</script>
+</body>
+</html>
